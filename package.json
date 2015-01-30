@@ -1,0 +1,9 @@
+{
+  "name": "ganton",
+	"description": "A super creepy bot",
+  "version": "0.0.0",
+  "dependencies": {
+		"request": "*",
+		"irc": "*"
+  }
+}
