@@ -43,5 +43,7 @@ bot.addListener("message", function(from, to, text, message) {
 				console.log(response.statusCode);
 			}
 		});
-	}
+    } else (text.substring(0, 11) == "<find-fname") {
+
+    }
 });
