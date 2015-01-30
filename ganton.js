@@ -14,14 +14,15 @@ var bot = new irc.Client(config.server, config.botName, {
 	channels: config.channels
 });
 
-function getPerson(param, value) {
+function stalkPerson(param, value, bot, to) {
     var url = base_url;
     url = url.concat(param + "=").concat(encodeURIComponent(value));
 
     // Debugging
     console.log(url);
 
-    request({
+    // OK, this is a little weird
+    var person = request({
         url: url,
         headers: {
             'User-Agent': 'Ganton by J3RN'
@@ -32,15 +33,15 @@ function getPerson(param, value) {
             console.log(JSON.stringify(json_response));
             if (json_response.length > 0) {
                 var person = json_response[0];
-                return person;
+                sendReply(bot, to, person);
+            } else {
+                sendReply(bot, to, undefined);
             }
         } else if (error) {
             console.log(error);
         } else {
             console.log(response.statusCode);
         }
-
-        return undefined;
     });
 }
 
@@ -60,18 +61,12 @@ bot.addListener("message", function(from, to, text, message) {
 	if (text.indexOf("<find-dot-number") == 0) {
 		var dotnumber= text.substring("<find-dot-number".length + 1);
 		console.log(dotnumber);
-
-        var person = getPerson("name_n", dotnumber);
-        sendReply(bot, to, person);
+        stalkPerson("name_n", dotnumber, bot, to);
     } else if (text.substring(0, 11) == "<find-fname") {
         var fname = text.match(/\<find-fname (.*)/)[1];
-
-        var person = getPerson("firstname", fname);
-        sendReply(bot, to, person);
+        stalkPerson("firstname", fname, bot, to);
     } else if (text.substring(0, 11) == "<find-lname") {
         var lname = text.match(/\<find-lname (.*)/)[1];
-
-        var person = getPerson("lastname", lname);
-        sendReply(bot, to, person);
+        stalkPerson("lastname", lname, bot, to);
     }
 });
