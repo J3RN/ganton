@@ -1,5 +1,5 @@
 var config = {
-	channels: ["#cwdg"],
+	channels: ["#cwdg", "#osuosc"],
 	server: "irc.freenode.net",
 	botName: "ganton-test"
 };
@@ -56,6 +56,9 @@ function sendReply(bot, to, person) {
         for (var i in person.majors) {
             message += ", majors in " + person.majors[i].major;
         }
+				for (var i in person.appointments) {
+					message += ", works as a " + person.appointments[i].job_title + " at " + person.appointments[i].organization;
+				}
         bot.say(to, message);
     } else {
         bot.say(to, "No data found");
