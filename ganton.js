@@ -1,6 +1,6 @@
 var config = {
 	channels: ["#cwdg", "#osuosc"],
-	server: "irc.freenode.net",
+	server: "chat.freenode.net",
 	botName: "ganton-test"
 };
 
@@ -8,7 +8,7 @@ var irc = require("irc");
 var http = require("http");
 var request = require("request");
 
-var base_url = "http://directory.osu.edu/fpjson.php?";
+var base_url = "https://directory.osu.edu/fpjson.php?";
 
 var bot = new irc.Client(config.server, config.botName, {
 	channels: config.channels
