@@ -14,9 +14,14 @@ var bot = new irc.Client(config.server, config.botName, {
 	channels: config.channels
 });
 
-function stalkPerson(param, value, bot, to) {
+function stalkPerson(params, bot, to) {
     var url = base_url;
-    url = url.concat(param + "=").concat(encodeURIComponent(value));
+
+    for (var ident in params) {
+        url = url.concat(ident + "=");
+        url = url.concat(encodeURIComponent(params[ident]));
+        url = url.concat("&")
+    }
 
     // Debugging
     console.log(url);
@@ -30,7 +35,7 @@ function stalkPerson(param, value, bot, to) {
     }, function(error, response, body) {
         if (!error && response.statusCode == 200) {
             var json_response = JSON.parse(body);
-            console.log(JSON.stringify(json_response));
+            // console.log(JSON.stringify(json_response));
             if (json_response.length > 0) {
                 var person = json_response[0];
                 sendReply(bot, to, person);
@@ -58,15 +63,21 @@ function sendReply(bot, to, person) {
 }
 
 bot.addListener("message", function(from, to, text, message) {
-	if (text.indexOf("<find-dot-number") == 0) {
-		var dotnumber= text.substring("<find-dot-number".length + 1);
-		console.log(dotnumber);
-        stalkPerson("name_n", dotnumber, bot, to);
-    } else if (text.substring(0, 11) == "<find-fname") {
-        var fname = text.match(/\<find-fname (.*)/)[1];
-        stalkPerson("firstname", fname, bot, to);
-    } else if (text.substring(0, 11) == "<find-lname") {
-        var lname = text.match(/\<find-lname (.*)/)[1];
-        stalkPerson("lastname", lname, bot, to);
+    params = {};
+
+    if (text.match(/\<find-dot-number (.*)/)) {
+        params["name_n"] = text.match(/\<find-dot-number (\w+)/)[1];
+    }
+
+    if (text.match(/\<find-fname (.*)/)) {
+        params["firstname"] = text.match(/\<find-fname (\w+)/)[1];
+    }
+
+    if (text.match(/\<find-lname (.*)/)) {
+        params["lastname"] = text.match(/\<find-lname (\w+)/)[1];
+    }
+
+    if (Object.keys(params)) {
+        stalkPerson(params, bot, to);
     }
 });
