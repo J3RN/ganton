@@ -68,16 +68,16 @@ function sendReply(bot, to, person) {
 bot.addListener("message", function(from, to, text, message) {
     params = {};
 
-    if (text.match(/\<find-dot-number (.*)/)) {
-        params["name_n"] = text.match(/\<find-dot-number (\w+)/)[1];
+    if (text.match(/\<dot-number (.*)/)) {
+        params["name_n"] = text.match(/\<dot-number (\w+)/)[1];
     }
 
-    if (text.match(/\<find-fname (.*)/)) {
-        params["firstname"] = text.match(/\<find-fname (\w+)/)[1];
+    if (text.match(/\<fname (.*)/)) {
+        params["firstname"] = text.match(/\<fname (\w+)/)[1];
     }
 
-    if (text.match(/\<find-lname (.*)/)) {
-        params["lastname"] = text.match(/\<find-lname (\w+)/)[1];
+    if (text.match(/\<lname (.*)/)) {
+        params["lastname"] = text.match(/\<lname (\w+)/)[1];
     }
 
     if (Object.keys(params)) {
