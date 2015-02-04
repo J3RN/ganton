@@ -1,5 +1,5 @@
 var config = {
-	channels: ["#cwdg", "#osuosc"],
+	channels: ["#cwdg"],
 	server: "chat.freenode.net",
 	botName: "ganton-test"
 };
@@ -68,15 +68,15 @@ function sendReply(bot, to, person) {
 bot.addListener("message", function(from, to, text, message) {
     params = {};
 
-    if (text.match(/\<dot-number (.*)/)) {
-        params["name_n"] = text.match(/\<dot-number (\w+)/)[1];
+    if (text.match(/\<dot-number (\w+\.\d+)/)) {
+        params["name_n"] = text.match(/\<dot-number (\w+\.\d+)/)[1];
     }
 
-    if (text.match(/\<fname (.*)/)) {
+    if (text.match(/\<fname (\w+)/)) {
         params["firstname"] = text.match(/\<fname (\w+)/)[1];
     }
 
-    if (text.match(/\<lname (.*)/)) {
+    if (text.match(/\<lname (\w+)/)) {
         params["lastname"] = text.match(/\<lname (\w+)/)[1];
     }
 
