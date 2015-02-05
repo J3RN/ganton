@@ -1,7 +1,7 @@
 var config = {
 	channels: ["#cwdg", "#osuosc"],
 	server: "chat.freenode.net",
-	botName: "ganton-test"
+	botName: "ganton"
 };
 
 var irc = require("irc");
@@ -69,7 +69,7 @@ bot.addListener("message", function(from, to, text, message) {
     params = {};
 
     if (text.match(/\<dot-number (.*)/)) {
-        params["name_n"] = text.match(/\<dot-number (\w+)/)[1];
+        params["name_n"] = text.match(/\<dot-number (\w+|.)/)[1];
     }
 
     if (text.match(/\<fname (.*)/)) {
