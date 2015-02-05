@@ -80,7 +80,7 @@ bot.addListener("message", function(from, to, text, message) {
         params["lastname"] = text.match(/\<lname (\w+)/)[1];
     }
 
-    if (Object.keys(params)) {
+    if (Object.keys(params).length) {
         stalkPerson(params, bot, to);
     }
 });
