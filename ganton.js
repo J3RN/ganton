@@ -65,7 +65,7 @@ function sendReply(bot, to, person) {
     }
 }
 
-bot.addListener("message", function(from, to, text, message) {
+function matchText(text, target) {
     params = {};
 
     if (text.match(/\<dot-number (\w+\.\d+)/)) {
@@ -81,6 +81,14 @@ bot.addListener("message", function(from, to, text, message) {
     }
 
     if (Object.keys(params).length) {
-        stalkPerson(params, bot, to);
+        stalkPerson(params, bot, target);
     }
+};
+
+bot.addListener("pm", function(from, text, message) {
+	matchText(text, from);
+});
+
+bot.addListener("message#", function(from, to, text, message) {
+	matchText(text, to);
 });
